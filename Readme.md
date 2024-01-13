@@ -1,14 +1,8 @@
----
-author: "Aimer G. Diaz"
-output: github_document
-bibliography: References.bib
-link-citations: true
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/biomed-central.csl
----
+Aimer G. Diaz
 
 # Alphafold2 monomer or oligomer prediction
 
-```{bash, eval=FALSE}
+``` bash
 
 module load GCCcore/12.2.0
 
