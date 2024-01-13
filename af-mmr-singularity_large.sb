@@ -1,0 +1,45 @@
+#!/bin/bash
+#SBATCH --job-name af232-mmer
+#SBATCH --time=48:00:00
+#SBATCH --gres=gpu:4
+#SBATCH -C [nvf|nal|nif]
+#SBATCH --cpus-per-task=20
+#SBATCH --mem=100G
+#SBATCH -o af232-mmer-%x.%j.log
+#SBATCH --error=af232-mmer-%x.%j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=aimerdiaz.evo@gmail.com
+
+module load GCC/6.4.0-2.28  OpenMPI/2.1.2 Python/3.6.4
+module load alphafold/2.3.2
+## SBATCH -C [nvf|nal|nif|nvl]
+echo $HOSTNAME
+echo "Export AlphaFold variables"
+# These variables are now set by the module
+echo INFO: ALPHAFOLD_DIR=$ALPHAFOLD_DIR
+echo INFO: ALPHAFOLD_DATADIR=$ALPHAFOLD_DATADIR
+
+export output_dir=$SLURM_SUBMIT_DIR/$2 # you chnage this to whatever path you like
+
+cd $SLURM_SUBMIT_DIR
+mkdir -p $output_dir
+timestamp=$(date)
+echo "Starting AlphaFold at $timestamp"
+
+python3 ${ALPHAFOLD_DIR}/run_singularity.py \
+    --use_gpu \
+    --output_dir=$output_dir \
+    --data_dir=${ALPHAFOLD_DATADIR} \
+    --fasta_paths=$1 \
+    --max_template_date=2023-08-01 \
+    --model_preset=multimer \
+    --db_preset=reduced_dbs
+
+#    --model_preset=monomer \
+#    --db_preset=reduced_dbs
+echo INFO: AlphaFold returned $?
+
+timestamp=$(date)
+echo "Finishing AlphaFold at $timestamp"
+
+#https://docs.icer.msu.edu/2023-11-10_LabNotebook_AlphaFold2.3.2/ 

@@ -1,0 +1,47 @@
+#!/bin/bash
+#SBATCH --job-name af-mmr
+#SBATCH --time=08:00:00
+#SBATCH --gres=gpu:4
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=70G
+#SBATCH --constraint="[intel18|amd20|amr|nvf|nal|nif]"
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=aimerdiaz.evo@gmail.com
+#SBATCH --job-name af_multimer     
+#SBATCH --output=Slurm-%x.%j.log
+#SBATCH --error=Slurm-%x.%j.err
+
+export NVIDIA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES}"
+export XLA_PYTHON_CLIENT_ALLOCATOR=platform
+export ALPHAFOLD_DATA_PATH="/mnt/research/common-data/alphafold/database"
+export ALPHAFOLD_MODELS="/mnt/research/common-data/alphafold/database/params"
+#/mnt/research/common-data/alphafold/database/small_bfd/
+singularity run --nv \
+-B $ALPHAFOLD_DATA_PATH:/data \
+-B $ALPHAFOLD_MODELS \
+-B .:/etc \
+--pwd  /app/alphafold /opt/software/alphafold/2.2.2/alphafold_2.2.2.sif \
+--data_dir=/data \
+--output_dir=/mnt/gs21/scratch/gutie190/AlphaFold/Viral/$2 \
+--db_preset=full_dbs \
+--fasta_paths=/mnt/gs21/scratch/gutie190/AlphaFold/Viral/$1  \
+--uniref90_database_path=/data/uniref90/uniref90.fasta  \
+--bfd_database_path=/data/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt \
+--uniprot_database_path=/data/uniprot/uniprot.fasta \
+--mgnify_database_path=/data/mgnify/mgy_clusters_2018_12.fa   \
+--uniclust30_database_path=/data/uniclust30/uniclust30_2018_08/uniclust30_2018_08 \
+--obsolete_pdbs_path=/data/pdb_mmcif/obsolete.dat \
+--pdb_seqres_database_path=/mnt/gs21/scratch/gutie190/AlphaFold/pdb_seqres.txt \
+--max_template_date=2022-01-01   \
+--template_mmcif_dir=/data/pdb_mmcif/mmcif_files \
+--model_preset=multimer \
+--use_gpu_relax=true
+
+#/data/uniclust30/uniclust30_2018_08/uniclust30_2018_08_a3m.ffdata \
+#--pdb70_database_path=/data/pdb70/pdb70  \
+#--small_bfd_database_path=/data/small_bfd/bfd-first_non_consensus_sequences.fasta \
+#--pdb_seqres_database_path=/data/pdb_seqres/pdb_seqres.txt \
+#--db_preset=reduced_dbs Choose preset MSA database configuration - smaller genetic database config (reduced_dbs) or full genetic database config  (full_dbs) (base) -bash-4.2$     (default: 'full_dbs')
+#wget https://files.rcsb.org/download/6ZKA.cif
+
+#https://github.com/deepmind/alphafold#running-alphafold
