@@ -8,38 +8,111 @@ csl: https://raw.githubusercontent.com/citation-style-language/styles/master/bio
 
 # Alphafold2 monomer or oligomer prediction
 
+<!-- Alphafold and RNA-binding domain scripts -->
+# Viral proteins structure prediction
+
+## Disorder domain prediction 
+
+### Plaac 
+
+[Plaac](plaac.wi.mit.edu) 
+
+### From Alphafold pLDDT to disorder score 
+[AlphaFold-disorder](https://github.com/BioComputingUP/AlphaFold-disorder )
+
+<!-- for f in `grep ">" viralProteins.ol.fa `; do name=` echo $f | tr -d ">"` ; grep -A1  $name viralProteins.ol.fa > $name.fa; done
+
+for f  in CaMV_P3/CaMV_P3/ranked_*.pdb  CaMV_P3_rnk0.pdb ; do awk -v i=1 '{sum+=$11; i=i+1 }END{print FILENAME,sum/i;}' $f ; done 
+
+for f  in ` ls  [A-Z]*_*fa| egrep -v "CaMV_P6|CaMV_P4"`; do name=`basename -s ".fa" $f`; sbatch alfafold_monomer-disorder.sb $f $name ; wait 1800; done 
+
+mv CaMV_P4/CaMV_P4/ranked_0.pdb CaMV_P4_rnk0.pdb
+
+for f in `grep ">" viralProteins.ol.fa | egrep -wv "TYMV_206K|TRoV_P2a|TCV_P8|TCV_P88"`; do name=` echo $f | tr -d ">"` ; echo -ne "$name\t" ;   score=`grep -A 1  order $name/$name/ranking_debug.json  | grep -v order  | grep -oP "(model.*?)(?=\")" ` ; grep $score $name/$name/ranking_debug.json | head -n 1 ; done  | awk -F'\t|:|,' '{print $1"\t"$3}'
+
+P88 has an X aa which disrtupt alphafold prediction,  the solution applied was to remove that single aa, which is enconded by a stop codon, separating Protein p28 protein from 	RNA-directed RNA polymerase, visualized on  https://web.expasy.org/translate/ , the X aa is a common representation for several viral proteins as shown here https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=438090#seqalign 
+-->
 ```{bash, eval=FALSE}
-
-module load GCCcore/12.2.0
-
-git config remote.origin.url git@github.com:AimerGDiaz/ProteinStructure
-git config --global user.name AimerGDiaz
-git config --global user.email "aiagutierrezdi@unal.edu.co"
-
-ssh-keygen -t rsa -C aiagutierrezdi@unal.edu.co
-
-# Generate git.pub in conventional .ssh folder, copy its content into github ssh keys
-
-# Same time write .ssh/config file with 
-Host github.com
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/.git
-  IdentitiesOnly yes
-
-#Tesdt key funcion by 
- ssh  -T git@github.com
-
-# Let's start to switching branch, from master to main
-git branch main 
-git checkout main
-git fetch origin
-git pull origin main
-
-# Ready to fill 
-git add .
-git commit -m "Welcome MSU"
-git push -u origin main
-
-
+awk -v OFS="\t" 'NR==1 {print "AA","Chain","PAA","pLDDT"} !a[$4""$5""$6""$11]++ && $11 ~ /[0-9]/{print $4,$5,$6,$11}' P6_dimmer_model.pdb  CaMV_P6_rnk0.pdb  > CaMV_P6_plddt.txt 
 ```
+
+```{r}
+library(ggplot2, quietly = F) 
+CaMV_P6 <- read.csv("CaMV_P6_plddt.txt", header = T, sep = "\t") 
+CaMV_P6$Chain <- gsub(pattern = "A", replacement = "Monomer", CaMV_P6$Chain)
+CaMV_P6$Chain <- gsub(pattern = "B", replacement = "Dimer-Left", CaMV_P6$Chain)
+CaMV_P6$Chain <- gsub(pattern = "C", replacement = "Dimer-Right", CaMV_P6$Chain)
+CaMV_P6_plot <- ggplot(CaMV_P6, aes(x=PAA, y=pLDDT, color=Chain)) + 
+  geom_line() + geom_point() + ggtitle("pLDDT CaMV P6 as monomer and dimer") +
+theme_classic() + theme(plot.title = element_text(hjust = 0.5))
+CaMV_P6_plot
+```
+
+```{bash, eval=FALSE}
+awk -v OFS="\t" 'NR==1 {print "AA","Chain","PAA","pLDDT"} !a[$4""$5""$6""$11]++ && $11 ~ /[0-9]/{print $4,"2a",$6,$11}' CMV_2a_rnk0.pdb > CMV2a_GRBP7dis.txt 
+awk -v OFS="\t" '!a[$4""$5""$6""$11]++ && $11 ~ /[0-9]/{print $4,"G3BP7",$6,$11}' AtG3BP7_AF.pdb >> CMV2a_GRBP7dis.txt 
+# Interaction polarity CMV 2a vs GRBP7
+awk -v OFS="\t" '!a[$4""$5""$6""$11]++ && $11 ~ /[0-9]/{prot=$5;gsub("B","2a-right", prot);gsub("C","GRBP7-left", prot);print $4,prot,$6,$11}' CMV2a_GRBP7dis_model_3.cor.pdb >> CMV2a_GRBP7dis.txt
+# Change of order GRBP7 vs CMV 2a 
+awk -v OFS="\t" '!a[$4""$5""$6""$11]++ && $11 ~ /[0-9]/{prot=$5;gsub("C","2a-left", prot);gsub("B","GRBP7-right", prot);print $4,prot,$6,$11}' GRBP7dis_CMV2a_model_3.cor.pdb >> CMV2a_GRBP7dis.txt  
+#cut -f 2 CMV2a_GRBP7dis.txt | sort | uniq -cd 
+#%s/  / /g 
+#%s/-/ /g
+#%s/  / /g 
+```  
+
+```{r}
+CMV2a_GRBP7 <- read.csv("CMV2a_GRBP7dis.txt", header = T, sep = "\t") 
+GRBP7 <- CMV2a_GRBP7[!grepl("2a", CMV2a_GRBP7$Chain),]
+CMV2a<- CMV2a_GRBP7[grepl("2a", CMV2a_GRBP7$Chain),]
+
+CMV2a_plot <- ggplot(CMV2a, aes(x=PAA, y=pLDDT, color=Chain)) + 
+  geom_line() + geom_point() + ggtitle("pLDDT CMV A6 as monomer and heterodimer") +
+theme_classic() + theme(plot.title = element_text(hjust = 0.5))
+
+GRBP7_plot <- ggplot(GRBP7, aes(x=PAA, y=pLDDT, color=Chain)) + 
+  geom_line() + geom_point() + ggtitle("pLDDT GRBP7 as monomer and heterodimer") +
+theme_classic() + theme(plot.title = element_text(hjust = 0.5))
+GRBP7_plot
+```
+### MobiDB 
+[MobiDB-lite](https://github.com/BioComputingUP/MobiDB-lite)
+# sources
+alphafold colors
+https://github.com/busrasavas/pymol-color-alphafold
+run https://raw.githubusercontent.com/cbalbin-bio/pymol-color-alphafold/master/coloraf.py
+coloraf
+
+https://www.rcsb.org/structure/5a9e
+
+* move sequence
+https://sourceforge.net/p/pymol/mailman/message/10098601/
+Set the mouse in editing mode.  
+Hold the shift key and put the mouse on  any atom of the ligand. 
+While holding the shift key, press the mouse wheel 
+
+* delete chain
+https://www.researchgate.net/post/How_to_delete_complete_chain_of_protein_in_PyMol
+
+* show sequence
+https://pymolwiki.org/index.php/Seq_view
+set seq_view, 1
+
+[Composuitional bais, significant functional associations and protein disorder values](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1618407/) :
+**N**	Gropu members 58 Mean disorder (D) value	0.45, functions in *Drosophila*	GO:0005634 [19]; nucleus (3 × 10-2)
+		GO:0003729 [16]; mRNA binding (1 × 10-7)
+		GO:0003723 [16]; RNA binding (1 × 10-11)
+Videos to Gif 
+https://convertio.co/download/4e3e62c5f5e6ba5448da7c243ea50079452818/ 
+Filling models 
+[AlphaFill](https://www.nature.com/articles/s41592-022-01685-y)
+
+Rosetta predictions, for 3a CMV movement protein
+https://www.ebi.ac.uk/interpro/entry/InterPro/IPR000603/rosettafold/
+
+2b or Suppressor of silencing 2b dimer and tetramer soon to be published 
+https://www.rcsb.org/structure/3cz3
+
+# Structure conservation and sequence evolution 
+
+[Evidence of a novel viral membrane fusion mechanism shared by the Hepaci, Pegi and Pestiviruses](https://www.biorxiv.org/content/10.1101/2022.10.18.512720v1) , [protein models](https://zenodo.org/record/7221315#.Y4869b7MIUE) 
