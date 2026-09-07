@@ -1,12 +1,26 @@
 ---
-author: "Aimer G. Diaz"
+title: "Condensation on dsRNA switches CaMV P6 from Target of Rapamycin activation for virus translation to viroplasm service"
+author: "Sanjana Holla* 1, Aimer Gutiérrez-Díaz* 1, Claudia Cortez 1, Emilie Vantard 1, Eduardo Méndez-López 1, Athanasios Xhurxhi 2, Subhankar Sahu 2, Christophe Ritzenthaler 2 & Anders Hafrén+ 1"
 output: github_document
+bibliography: References.bib
+link-citations: true
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/biomed-central.csl
 editor_options: 
   markdown: 
     wrap: 72
 ---
 
-# CaMV P6 structural analysis
+**affiliations:** 1. Department of Plant Biology, Uppsala BioCenter, Swedish University of Agricultural Sciences and Linnean Center for Plant Biology, Box 7080, 75007 Uppsala, Sweden.
+2. Institut de Biologie Moléculaire des Plantes, UPR2357 du Centre National de la Recherche Scientifique, Université de Strasbourg, Strasbourg F-67084, France
+
+* equal contribution
++ **correspondence:** anders.hafren@slu.se
+
+# Methods : Protein Complex Structure 
+
+P6 dimer complexes with either a 30bp dsRNA duplex or TOR were predicted using Alphafold3  @abramson2024accurate and Protenix @bytedance2025protenix with default parameters, retaining per model ipTM, ptm, pLDDT, and GPDE confidence metrics to benchmark confidence. The dsRNA sequence used was AAGCUUCAAAUUAAGUCAGCUCCUUAAAUG and its reverse complement. From Protenix JSON output, Predicted Aligned Error (PAE) and Predicted Distance Error (PDE) from all 5 models, and the single-residue contact-probability (CP) matrix was extracted and processed into per-residue level interface statistics by extracting the minimal PAE or maximal contact of the Protein-Protein interaction surface of P6-to-itself, P6 dimers, P6 to 30bp dsRNA duplex, or P6 bound to TOR.
+
+## CaMV P6 structural analysis
 
 This repository contains the structural models, prediction inputs, analysis
 code, processed results, and computational figures supporting the analysis of
@@ -23,7 +37,7 @@ Models were generated with Protenix using the prediction inputs and seeds
 provided here. AlphaFold 3 models used as independent structural comparisons
 are deposited under `Models/AlphaFold3/`.
 
-## Repository contents
+### Repository contents
 
 | Directory | Contents |
 |---|---|
@@ -36,7 +50,7 @@ are deposited under `Models/AlphaFold3/`.
 | `Figures/` | Computational plots generated from the deposited analyses. |
 
 
-## Deposited complexes
+### Deposited complexes
 
 | Complex | Composition | Protenix seed | Samples | Manuscript model |
 |---|---|---:|---:|---|
@@ -52,7 +66,7 @@ In the P6IDR modelled construct, wild-type residues 224-247
 `QTGVAYIPGAKCG`, producing a 509-aa chain. Relative to the deposited wild-type
 input, the modelled construct also contains V142L. 
 
-## Requirements
+### Requirements
 
 - Python 3.10 or later for extracting matrices from Protenix JSON output.
 - R 4.4 or later for the analysis and plotting scripts.
@@ -64,7 +78,7 @@ Create the R environment with:
 install.packages(c("rmarkdown", "ggplot2", "dplyr", "readr", "tidyr", "scales", "svglite"))
 ```
 
-## Reproducing metric extraction
+### Reproducing metric extraction
 
 The compressed full-data JSON files contain the model-wise PAE, PDE, pLDDT,
 and contact-probability outputs. Extract the pairwise matrices with:
@@ -102,7 +116,7 @@ Rscript Code/plot_p6_interfaces.R
 The script writes regenerated SVG files to `Figures/Reproduced/`. The
 publication versions are retained in `Figures/` for direct comparison.
 
-## Interpretation
+### Interpretation
 
 PAE and PDE report model confidence rather than experimental binding affinity.
 Contact probability identifies model-supported contacts but does not establish
@@ -110,12 +124,15 @@ that an interaction occurs in vivo. The deposited models should therefore be
 interpreted together with the experimental condensation and translation assays
 reported in the manuscript.
 
-## Citations
 
-Please cite the accompanying manuscript
+# Methods : Disorder Prediction 
 
-## License
+Intrinsic disorder and conditional folding propensity were estimated using [AlphaFold-Disorder](https://github.com/BioComputingUP/AlphaFold-disorder) @piovesan2022intrinsic. 
+
+# License
 
 Code is released under the GNU General Public License v3.0. The manuscript,
 figures, model outputs, and third-party software remain subject to their
 respective licences and citation requirements.
+
+# References
