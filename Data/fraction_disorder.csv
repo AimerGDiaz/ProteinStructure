@@ -1,0 +1,36 @@
+Name	Model	fraction_disordered
+P6_Monomer	0	0.42
+P6_Monomer	1	0.42
+P6_Monomer	2	0.41
+P6_Monomer	3	0.44
+P6_Monomer	4	0.44
+P6_Dimer	0	0.4
+P6_Dimer	1	0.38
+P6_Dimer	2	0.41
+P6_Dimer	3	0.37
+P6_Dimer	4	0.36
+P6_Dimer and TOR	0	0.15
+P6_Dimer and TOR	1	0.14
+P6_Dimer and TOR	2	0.13
+P6_Dimer and TOR	3	0.15
+P6_Dimer and TOR	4	0.16
+P6_Dimer and dsRNA	0	0.43
+P6_Dimer and dsRNA	1	0.42
+P6_Dimer and dsRNA	2	0.39
+P6_Dimer and dsRNA	3	0.39
+P6_Dimer and dsRNA	4	0.36
+P6_Dimer, 2Zn and dsRNA 	0	0.41
+P6_Dimer, 2Zn and dsRNA 	1	0.41
+P6_Dimer, 2Zn and dsRNA 	2	0.4
+P6_Dimer, 2Zn and dsRNA 	3	0.24
+P6_Dimer, 2Zn and dsRNA 	4	0.08
+P6_Dimer, 2Zn and TOR 	0	0.15
+P6_Dimer, 2Zn and TOR 	1	0.13
+P6_Dimer, 2Zn and TOR 	2	0.13
+P6_Dimer, 2Zn and TOR 	3	0.11
+P6_Dimer, 2Zn and TOR 	4	0.11
+P6_Tetramer, 4Zn and dsRNA 	0	0.37
+P6_Tetramer, 4Zn and dsRNA 	1	0.14
+P6_Tetramer, 4Zn and dsRNA 	2	0.12
+P6_Tetramer, 4Zn and dsRNA 	3	0.02
+P6_Tetramer, 4Zn and dsRNA 	4	0.01
