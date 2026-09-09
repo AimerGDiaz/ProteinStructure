@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Compatibility changes relative to BioComputingUP/AlphaFold-disorder:
+# the three input accumulation paths use pd.concat(..., ignore_index=True)
+# instead of DataFrame.append (removed in pandas 2). Prediction frames are
+# collected in a list and concatenated once, with an empty-list fallback.
+# Scoring, DSSP extraction, defaults and output columns are unchanged.
+# See Readme.Rmd, Methods : Disorder Prediction, for interpretation and limits.
 from Bio.PDB import PDBParser
 from Bio.PDB.MMCIFParser import FastMMCIFParser
 from Bio.SeqUtils import seq1

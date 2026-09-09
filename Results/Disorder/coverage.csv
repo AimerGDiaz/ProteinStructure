@@ -1,0 +1,46 @@
+condition,seed,model,chain,name,n_residues,first,last
+P6 monomer,88467,0,A,P6_Monomer_seed_88467_sample_0_chain_A,520,1,520
+P6 monomer,88467,1,A,P6_Monomer_seed_88467_sample_1_chain_A,520,1,520
+P6 monomer,88467,2,A,P6_Monomer_seed_88467_sample_2_chain_A,520,1,520
+P6 monomer,88467,3,A,P6_Monomer_seed_88467_sample_3_chain_A,520,1,520
+P6 monomer,88467,4,A,P6_Monomer_seed_88467_sample_4_chain_A,520,1,520
+P6 dimer,88467,0,A,P6_Dimer_seed_88467_sample_0_chain_A,520,1,520
+P6 dimer,88467,0,B,P6_Dimer_seed_88467_sample_0_chain_B,520,1,520
+P6 dimer,88467,1,A,P6_Dimer_seed_88467_sample_1_chain_A,520,1,520
+P6 dimer,88467,1,B,P6_Dimer_seed_88467_sample_1_chain_B,520,1,520
+P6 dimer,88467,2,A,P6_Dimer_seed_88467_sample_2_chain_A,520,1,520
+P6 dimer,88467,2,B,P6_Dimer_seed_88467_sample_2_chain_B,520,1,520
+P6 dimer,88467,3,A,P6_Dimer_seed_88467_sample_3_chain_A,520,1,520
+P6 dimer,88467,3,B,P6_Dimer_seed_88467_sample_3_chain_B,520,1,520
+P6 dimer,88467,4,A,P6_Dimer_seed_88467_sample_4_chain_A,520,1,520
+P6 dimer,88467,4,B,P6_Dimer_seed_88467_sample_4_chain_B,520,1,520
+P6-dsRNA,95890,0,A,P6_dimer_dsRNA_seed_95890_sample_0_chain_A,520,1,520
+P6-dsRNA,95890,0,B,P6_dimer_dsRNA_seed_95890_sample_0_chain_B,520,1,520
+P6-dsRNA,95890,1,A,P6_dimer_dsRNA_seed_95890_sample_1_chain_A,520,1,520
+P6-dsRNA,95890,1,B,P6_dimer_dsRNA_seed_95890_sample_1_chain_B,520,1,520
+P6-dsRNA,95890,2,A,P6_dimer_dsRNA_seed_95890_sample_2_chain_A,520,1,520
+P6-dsRNA,95890,2,B,P6_dimer_dsRNA_seed_95890_sample_2_chain_B,520,1,520
+P6-dsRNA,95890,3,A,P6_dimer_dsRNA_seed_95890_sample_3_chain_A,520,1,520
+P6-dsRNA,95890,3,B,P6_dimer_dsRNA_seed_95890_sample_3_chain_B,520,1,520
+P6-dsRNA,95890,4,A,P6_dimer_dsRNA_seed_95890_sample_4_chain_A,520,1,520
+P6-dsRNA,95890,4,B,P6_dimer_dsRNA_seed_95890_sample_4_chain_B,520,1,520
+P6-TOR,88467,0,A,P6_dimer_TOR_seed_88467_sample_0_chain_A,520,1,520
+P6-TOR,88467,0,B,P6_dimer_TOR_seed_88467_sample_0_chain_B,520,1,520
+P6-TOR,88467,1,A,P6_dimer_TOR_seed_88467_sample_1_chain_A,520,1,520
+P6-TOR,88467,1,B,P6_dimer_TOR_seed_88467_sample_1_chain_B,520,1,520
+P6-TOR,88467,2,A,P6_dimer_TOR_seed_88467_sample_2_chain_A,520,1,520
+P6-TOR,88467,2,B,P6_dimer_TOR_seed_88467_sample_2_chain_B,520,1,520
+P6-TOR,88467,3,A,P6_dimer_TOR_seed_88467_sample_3_chain_A,520,1,520
+P6-TOR,88467,3,B,P6_dimer_TOR_seed_88467_sample_3_chain_B,520,1,520
+P6-TOR,88467,4,A,P6_dimer_TOR_seed_88467_sample_4_chain_A,520,1,520
+P6-TOR,88467,4,B,P6_dimer_TOR_seed_88467_sample_4_chain_B,520,1,520
+P6IDR-dsRNA,95890,0,A,P6_dimer_ivIDR_dsRNA_seed_95890_sample_0_chain_A,509,1,509
+P6IDR-dsRNA,95890,0,B,P6_dimer_ivIDR_dsRNA_seed_95890_sample_0_chain_B,509,1,509
+P6IDR-dsRNA,95890,1,A,P6_dimer_ivIDR_dsRNA_seed_95890_sample_1_chain_A,509,1,509
+P6IDR-dsRNA,95890,1,B,P6_dimer_ivIDR_dsRNA_seed_95890_sample_1_chain_B,509,1,509
+P6IDR-dsRNA,95890,2,A,P6_dimer_ivIDR_dsRNA_seed_95890_sample_2_chain_A,509,1,509
+P6IDR-dsRNA,95890,2,B,P6_dimer_ivIDR_dsRNA_seed_95890_sample_2_chain_B,509,1,509
+P6IDR-dsRNA,95890,3,A,P6_dimer_ivIDR_dsRNA_seed_95890_sample_3_chain_A,509,1,509
+P6IDR-dsRNA,95890,3,B,P6_dimer_ivIDR_dsRNA_seed_95890_sample_3_chain_B,509,1,509
+P6IDR-dsRNA,95890,4,A,P6_dimer_ivIDR_dsRNA_seed_95890_sample_4_chain_A,509,1,509
+P6IDR-dsRNA,95890,4,B,P6_dimer_ivIDR_dsRNA_seed_95890_sample_4_chain_B,509,1,509
